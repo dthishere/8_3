@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc mừng ngày 8/3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5fb 50%, #ffe6f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Falling hearts background animation */
+        .container-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart-fall {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            user-select: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main content */
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: clamp(28px, 6vw, 48px);
+            color: #ff1493;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.1);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .button-container {
+            margin: 40px 0;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+            color: white;
+            border: none;
+            padding: clamp(12px 20px, 3vw 5vw, 15px 35px);
+            font-size: clamp(14px, 4vw, 18px);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            pointer-events: none;
+        }
+
+        button:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .message-box {
+            display: none;
+            margin-top: 30px;
+            min-height: 100px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+            border-radius: 15px;
+            border-left: 5px solid #ff1493;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .message-box.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-text {
+            font-size: clamp(14px, 3vw, 18px);
+            color: #d946a6;
+            line-height: 1.8;
+            font-weight: 500;
+            min-height: 80px;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background-color: #ff1493;
+            margin-left: 5px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+
+        /* Floating hearts */
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 30px;
+            animation: floatUp 3s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(30px) scale(0.5);
+            }
+        }
+
+        @keyframes floatUp2 {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(-30px) scale(0.5);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .content {
+                margin: 20px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                margin-bottom: 20px;
+            }
+
+            .button-container {
+                margin: 25px 0;
+            }
+
+            .message-box {
+                margin-top: 20px;
+                padding: 15px;
+            }
+
+            .message-text {
+                line-height: 1.6;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .music-toggle {
+                bottom: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background falling hearts -->
+    <div class="container-hearts" id="heartsContainer"></div>
+
+    <!-- Main content -->
+    <div class="content">
+        <h1>💝 Chúc mừng Ngày Quốc tế Phụ nữ 8/3 💝</h1>
+        
+        <div class="button-container">
+            <button onclick="showMessage()">Bấm vào đây ✨</button>
+        </div>
+
+        <div class="message-box" id="messageBox">
+            <div class="message-text" id="messageText"></div>
+            <span class="typing-cursor" id="cursor"></span>
+        </div>
+    </div>
+
+    <!-- Music toggle button -->
+    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">🔊</button>
+
+    <!-- Audio for background music -->
+    <audio id="backgroundMusic" loop>
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
+
+    <script>
+        // Create falling hearts animation
+        function createFallingHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝'];
+            
+            function addHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-fall');
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+                heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                
+                container.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 5000);
+            }
+            
+            // Create multiple hearts
+            for (let i = 0; i < 5; i++) {
+                setTimeout(addHeart, i * 200);
+            }
+            
+            // Keep adding hearts periodically
+            setInterval(() => {
+                if (Math.random() > 0.5) addHeart();
+            }, 800);
+        }
+
+        // Typing effect
+        function typeMessage(text, elementId, speed = 50) {
+            return new Promise((resolve) => {
+                const element = document.getElementById(elementId);
+                element.textContent = '';
+                let index = 0;
+
+                function type() {
+                    if (index < text.length) {
+                        element.textContent += text.charAt(index);
+                        index++;
+                        setTimeout(type, speed);
+                    } else {
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
+
+        // Create floating hearts effect
+        function createFloatingHearts(x, y) {
+            const hearts = ['❤️', '💕', '💖', '💗', '💝'];
+            for (let i = 0; i < 8; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+                heart.style.fontSize = (15 + Math.random() * 25) + 'px';
+                
+                if (i % 2 === 0) {
+                    heart.style.animation = 'floatUp 3s ease-out forwards';
+                } else {
+                    heart.style.animation = 'floatUp2 3s ease-out forwards';
+                }
+                
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+
+        // Show message with effects
+        async function showMessage() {
+            const messageBox = document.getElementById('messageBox');
+            const messageText = document.getElementById('messageText');
+            
+            if (messageBox.classList.contains('show')) {
+                messageBox.classList.remove('show');
+                messageText.textContent = '';
+                return;
+            }
+
+            messageBox.classList.add('show');
+            
+            const message = "Chúc Na luôn xinh đẹp, hạnh phúc và luôn mỉm cười mỗi ngày.\n\nCảm ơn vì đã xuất hiện trong cuộc sống của Hiếu. 💕";
+            
+            // Create floating hearts from button area
+            const button = event.target;
+            const rect = button.getBoundingClientRect();
+            createFloatingHearts(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            
+            // Type message
+            await typeMessage(message, 'messageText', 40);
+            
+            // Remove cursor after typing
+            document.getElementById('cursor').style.display = 'none';
+        }
+
+        // Background music with Web Audio API fallback
+        function initMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            // Create a simple sine wave for background music using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Create a gentle musical tone
+            const now = audioContext.currentTime;
+            const frequencies = [261.63, 329.63, 392.00, 329.63]; // C, E, G notes
+            
+            let oscillators = [];
+            
+            function playMusicSequence() {
+                frequencies.forEach((freq, index) => {
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.05, audioContext.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    osc.start(audioContext.currentTime + index * 0.2);
+                    osc.stop(audioContext.currentTime + index * 0.2 + 0.5);
+                });
+                
+                setTimeout(playMusicSequence, 2000);
+            }
+            
+            return { play: () => playMusicSequence(), stop: () => {} };
+        }
+
+        let musicPlayer = null;
+        let isPlaying = false;
+
+        function toggleMusic() {
+            const toggle = document.getElementById('musicToggle');
+            
+            if (!musicPlayer) {
+                musicPlayer = initMusic();
+            }
+            
+            if (!isPlaying) {
+                musicPlayer.play();
+                toggle.textContent = '🔊';
+                isPlaying = true;
+            } else {
+                musicPlayer.stop();
+                toggle.textContent = '🔇';
+                isPlaying = false;
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createFallingHearts();
+            
+            // Auto-play music after 1 second
+            setTimeout(() => {
+                toggleMusic();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
