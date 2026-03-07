@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Gửi Na 💖</title>
 
 <style>
@@ -16,7 +18,7 @@ overflow:hidden;
 background:radial-gradient(circle,#0f2027,#203a43,#2c5364);
 }
 
-/* sao */
+/* nền sao */
 
 body::before{
 content:"";
@@ -30,56 +32,56 @@ z-index:-1;
 pointer-events:none;
 }
 
+/* tiêu đề */
+
 h1{
 margin-top:50px;
 color:#ff7eb9;
 }
 
+/* chữ */
+
 #text{
-font-size:20px;
+font-size:22px;
 max-width:90%;
 margin:auto;
-line-height:1.6;
+line-height:1.7;
 min-height:120px;
 color:#ff7eb9;
-}
-
-/* nút */
-
-button{
-padding:15px 30px;
-border:none;
-border-radius:30px;
-font-size:18px;
-background:#ff7eb9;
-color:white;
-margin-top:20px;
-}
-
-/* tim */
-
-.heart{
-position:absolute;
-font-size:20px;
-animation:fly 2s linear forwards;
-}
-
-@keyframes fly{
-0%{transform:scale(1);opacity:1}
-100%{transform:translateY(-200px) scale(2);opacity:0}
+padding:20px;
 }
 
 /* ảnh */
 
 #photo{
 display:none;
-margin-top:20px;
+margin-top:25px;
 }
 
 #photo img{
-width:220px;
+width:230px;
 border-radius:20px;
-box-shadow:0 0 30px pink;
+box-shadow:0 0 40px pink;
+}
+
+/* tim */
+
+.heart{
+position:absolute;
+font-size:22px;
+animation:fly 2s linear forwards;
+pointer-events:none;
+}
+
+@keyframes fly{
+0%{
+transform:scale(1);
+opacity:1;
+}
+100%{
+transform:translateY(-200px) scale(2);
+opacity:0;
+}
 }
 
 /* bất ngờ */
@@ -94,10 +96,10 @@ background:black;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:30px;
+font-size:34px;
+color:#ff7eb9;
 opacity:0;
 transition:2s;
-color:#ff7eb9;
 }
 
 </style>
@@ -109,8 +111,6 @@ color:#ff7eb9;
 
 <div id="text"></div>
 
-<button onclick="start()">Bấm vào đây nha Na 💌</button>
-
 <div id="photo">
 <img src="na.jpg">
 </div>
@@ -120,100 +120,141 @@ Anh thích Na rất nhiều 💗
 </div>
 
 <audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f0e8a6e17.mp3">
+<source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-const messages = [
+/* lời chúc */
+
+const messages=[
 "Chúc Na một ngày 8/3 thật nhiều niềm vui 🌸",
 "Luôn luôn xinh đẹp và hạnh phúc",
-"Cảm ơn Na vì đã xuất hiện",
+"Cảm ơn Na vì đã xuất hiện trong cuộc sống của anh",
 "Làm cho thế giới của anh trở nên đặc biệt hơn",
 "Và thật ra...",
-"Anh có điều muốn nói..."
+"Anh có một điều muốn nói..."
 ];
 
-let i = 0;
+let i=0;
 
-function start() {
+const text=document.getElementById("text");
+const music=document.getElementById("music");
 
-    const btn = document.querySelector("button");
-    btn.style.display = "none";
+/* web tự chạy */
 
-    const music = document.getElementById("music");
-    music.muted = false;
+setTimeout(()=>{
 
-    music.play().catch(() => {
-        console.log("Trình duyệt chặn autoplay audio");
-    });
+music.play().catch(()=>{});
 
-    showText();
+showText();
+
+},1000);
+
+
+/* hiệu ứng gõ chữ */
+
+function typeWriter(message,callback){
+
+let index=0;
+
+text.innerHTML="";
+
+let typing=setInterval(()=>{
+
+text.innerHTML+=message[index];
+
+index++;
+
+if(index===message.length){
+
+clearInterval(typing);
+
+setTimeout(callback,1200);
+
 }
 
-function showText() {
+},50);
 
-    const text = document.getElementById("text");
-
-    if (i < messages.length) {
-
-        text.innerHTML = messages[i];
-        i++;
-
-        setTimeout(showText, 2000);
-
-    } else {
-
-        document.getElementById("photo").style.display = "block";
-
-        fireworks();
-
-        setTimeout(() => {
-            document.getElementById("surprise").style.opacity = 1;
-        }, 4000);
-    }
 }
 
-document.addEventListener("click", function(e){
+/* hiện từng câu */
 
-    let heart = document.createElement("div");
+function showText(){
 
-    heart.className = "heart";
-    heart.innerHTML = "💖";
+if(i<messages.length){
 
-    heart.style.left = e.clientX + "px";
-    heart.style.top = e.clientY + "px";
+typeWriter(messages[i],()=>{
 
-    document.body.appendChild(heart);
+i++;
 
-    setTimeout(() => {
-        heart.remove();
-    }, 2000);
+showText();
 
 });
 
+}
+
+else{
+
+document.getElementById("photo").style.display="block";
+
+fireworks();
+
+setTimeout(()=>{
+
+document.getElementById("surprise").style.opacity=1;
+
+},4000);
+
+}
+
+}
+
+/* tim khi chạm */
+
+document.addEventListener("click",function(e){
+
+let heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="💖";
+
+heart.style.left=e.clientX+"px";
+heart.style.top=e.clientY+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),2000);
+
+});
+
+/* pháo hoa */
+
 function fireworks(){
 
-    for(let i = 0; i < 30; i++){
+for(let i=0;i<40;i++){
 
-        setTimeout(() => {
+setTimeout(()=>{
 
-            let heart = document.createElement("div");
+let heart=document.createElement("div");
 
-            heart.className = "heart";
-            heart.innerHTML = "💗";
+heart.className="heart";
 
-            heart.style.left = Math.random()*window.innerWidth + "px";
-            heart.style.top = Math.random()*window.innerHeight + "px";
+heart.innerHTML="💗";
 
-            document.body.appendChild(heart);
+heart.style.left=Math.random()*window.innerWidth+"px";
 
-            setTimeout(()=>{
-                heart.remove();
-            },2000);
+heart.style.top=Math.random()*window.innerHeight+"px";
 
-        }, i * 100);
-    }
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),2000);
+
+},i*120);
+
+}
+
 }
 
 </script>
