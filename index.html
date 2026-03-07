@@ -2,7 +2,9 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Happy 8/3 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy 8/3 Na 💖</title>
 
 <style>
 
@@ -20,7 +22,15 @@ text-align:center;
 color:white;
 }
 
-/* ảnh Na */
+/* chữ */
+
+#text{
+font-size:22px;
+width:80%;
+min-height:80px;
+}
+
+/* ảnh */
 
 #na{
 width:220px;
@@ -28,18 +38,10 @@ border-radius:20px;
 margin-top:20px;
 opacity:0;
 transition:3s;
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
-/* chữ */
-
-#text{
-font-size:24px;
-width:70%;
-min-height:60px;
-}
-
-/* tim bay */
+/* tim */
 
 .heart{
 position:fixed;
@@ -86,7 +88,6 @@ transition:1s;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -102,24 +103,34 @@ transition:1s;
 </audio>
 
 <div id="surprise">
-💖 Cảm ơn Na vì đã ở đây 💖
+💖 Híu yêu Na rất nhiều 💖
 </div>
 
 <script>
 
-/* nhạc */
+/* phát nhạc cho điện thoại */
 
 let music=document.getElementById("music")
 
-document.addEventListener("click",()=>{
+document.body.addEventListener("touchstart",()=>{
+music.play()
+},{once:true})
+
+document.body.addEventListener("click",()=>{
 music.play()
 },{once:true})
 
 
 
-/* chữ hiện từng chữ */
+/* lời chúc */
 
-let message="Chúc Na luôn xinh đẹp, vui vẻ và hạnh phúc. Cảm ơn vì đã xuất hiện và làm thế giới này dễ thương hơn 💖"
+let message=
+"Chúc Na một ngày 8/3 thật nhiều niềm vui. \
+Chúc Na luôn xinh đẹp, luôn rạng rỡ và luôn mỉm cười thật tươi. \
+Mong rằng mỗi ngày của Na đều tràn ngập hạnh phúc. \
+Cảm ơn Na vì đã xuất hiện và làm thế giới này trở nên dễ thương hơn. \
+Hy vọng rằng Na sẽ luôn được yêu thương, luôn được quan tâm và luôn thật hạnh phúc. \
+Híu yêu Na rất nhiều 💖"
 
 let i=0
 
@@ -131,7 +142,7 @@ document.getElementById("text").innerHTML+=message.charAt(i)
 
 i++
 
-setTimeout(typeText,60)
+setTimeout(typeText,50)
 
 }
 
@@ -141,7 +152,7 @@ typeText()
 
 
 
-/* ảnh hiện từ từ */
+/* ảnh xuất hiện */
 
 setTimeout(()=>{
 document.getElementById("na").style.opacity=1
@@ -203,7 +214,7 @@ p.remove()
 
 
 
-/* bất ngờ 50s */
+/* kết thúc 50s */
 
 setTimeout(()=>{
 
