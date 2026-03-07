@@ -9,66 +9,80 @@
 
 body{
 margin:0;
-padding:0;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
 font-family:Arial;
-color:white;
 text-align:center;
+color:white;
 overflow:hidden;
-
-background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffb199);
-background-size:400% 400%;
-animation:bgmove 10s infinite alternate;
+background:radial-gradient(circle,#0f2027,#203a43,#2c5364);
 }
 
-@keyframes bgmove{
-0%{background-position:left}
-100%{background-position:right}
+/* sao */
+
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background-image:radial-gradient(white 1px,transparent 1px);
+background-size:40px 40px;
+opacity:0.3;
+z-index:-1;
+pointer-events:none;
 }
 
 h1{
-font-size:28px;
-margin:10px;
+margin-top:50px;
+color:#ff7eb9;
 }
 
 #text{
 font-size:20px;
 max-width:90%;
+margin:auto;
 line-height:1.6;
+min-height:120px;
+color:#ff7eb9;
 }
+
+/* nút */
 
 button{
 padding:15px 30px;
 border:none;
 border-radius:30px;
 font-size:18px;
-background:white;
-color:#ff4b7d;
+background:#ff7eb9;
+color:white;
 margin-top:20px;
-cursor:pointer;
 }
+
+/* tim */
 
 .heart{
 position:absolute;
-color:red;
 font-size:20px;
 animation:fly 2s linear forwards;
 }
 
 @keyframes fly{
-0%{
-transform:translateY(0) scale(1);
-opacity:1;
+0%{transform:scale(1);opacity:1}
+100%{transform:translateY(-200px) scale(2);opacity:0}
 }
-100%{
-transform:translateY(-200px) scale(2);
-opacity:0;
+
+/* ảnh */
+
+#photo{
+display:none;
+margin-top:20px;
 }
+
+#photo img{
+width:220px;
+border-radius:20px;
+box-shadow:0 0 30px pink;
 }
+
+/* bất ngờ */
 
 #surprise{
 position:fixed;
@@ -78,12 +92,12 @@ width:100%;
 height:100%;
 background:black;
 display:flex;
-justify-content:center;
 align-items:center;
-font-size:28px;
+justify-content:center;
+font-size:30px;
 opacity:0;
-color:#ff4b7d;
 transition:2s;
+color:#ff7eb9;
 }
 
 </style>
@@ -97,115 +111,109 @@ transition:2s;
 
 <button onclick="start()">Bấm vào đây nha Na 💌</button>
 
-<div id="surprise">Anh thích Na rất nhiều 💖</div>
+<div id="photo">
+<img src="na.jpg">
+</div>
+
+<div id="surprise">
+Anh thích Na rất nhiều 💗
+</div>
 
 <audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f0e8a6e17.mp3" type="audio/mpeg">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f0e8a6e17.mp3">
 </audio>
 
 <script>
 
-const messages=[
+const messages = [
 "Chúc Na một ngày 8/3 thật nhiều niềm vui 🌸",
 "Luôn luôn xinh đẹp và hạnh phúc",
 "Cảm ơn Na vì đã xuất hiện",
 "Làm cho thế giới của anh trở nên đặc biệt hơn",
 "Và thật ra...",
-"Anh có điều này muốn nói..."
-]
+"Anh có điều muốn nói..."
+];
 
-let i=0
-let text=document.getElementById("text")
+let i = 0;
 
-function start(){
+function start() {
 
-document.querySelector("button").style.display="none"
+    const btn = document.querySelector("button");
+    btn.style.display = "none";
 
-document.getElementById("music").play()
+    const music = document.getElementById("music");
+    music.muted = false;
 
-showText()
+    music.play().catch(() => {
+        console.log("Trình duyệt chặn autoplay audio");
+    });
 
+    showText();
 }
 
-function showText(){
+function showText() {
 
-if(i<messages.length){
+    const text = document.getElementById("text");
 
-let line=messages[i]
-let j=0
+    if (i < messages.length) {
 
-let interval=setInterval(()=>{
+        text.innerHTML = messages[i];
+        i++;
 
-text.innerHTML=line.substring(0,j)
+        setTimeout(showText, 2000);
 
-j++
+    } else {
 
-if(j>line.length){
-clearInterval(interval)
-i++
-setTimeout(showText,1500)
+        document.getElementById("photo").style.display = "block";
+
+        fireworks();
+
+        setTimeout(() => {
+            document.getElementById("surprise").style.opacity = 1;
+        }, 4000);
+    }
 }
 
-},80)
+document.addEventListener("click", function(e){
 
-}
+    let heart = document.createElement("div");
 
-else{
+    heart.className = "heart";
+    heart.innerHTML = "💖";
 
-fireworks()
+    heart.style.left = e.clientX + "px";
+    heart.style.top = e.clientY + "px";
 
-setTimeout(()=>{
-document.getElementById("surprise").style.opacity=1
-},3000)
+    document.body.appendChild(heart);
 
-}
+    setTimeout(() => {
+        heart.remove();
+    }, 2000);
 
-}
-
-document.addEventListener("click",(e)=>{
-
-let heart=document.createElement("div")
-
-heart.innerHTML="❤️"
-
-heart.className="heart"
-
-heart.style.left=e.clientX+"px"
-heart.style.top=e.clientY+"px"
-
-document.body.appendChild(heart)
-
-setTimeout(()=>{
-heart.remove()
-},2000)
-
-})
+});
 
 function fireworks(){
 
-for(let i=0;i<30;i++){
+    for(let i = 0; i < 30; i++){
 
-setTimeout(()=>{
+        setTimeout(() => {
 
-let heart=document.createElement("div")
+            let heart = document.createElement("div");
 
-heart.innerHTML="💖"
+            heart.className = "heart";
+            heart.innerHTML = "💗";
 
-heart.className="heart"
+            heart.style.left = Math.random()*window.innerWidth + "px";
+            heart.style.top = Math.random()*window.innerHeight + "px";
 
-heart.style.left=Math.random()*window.innerWidth+"px"
-heart.style.top=Math.random()*window.innerHeight+"px"
+            document.body.appendChild(heart);
 
-document.body.appendChild(heart)
+            setTimeout(()=>{
+                heart.remove();
+            },2000);
 
-setTimeout(()=>{
-heart.remove()
-},2000)
-
-},i*150)
-
-}
-
+        }, i * 100);
+    }
 }
 
 </script>
