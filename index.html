@@ -3,116 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chúc Na 8/3</title>
+<title>Gửi Na 💖</title>
 
 <style>
 
-*{
+body{
 margin:0;
 padding:0;
-box-sizing:border-box;
-font-family:Segoe UI;
-}
-
-body{
-background: radial-gradient(circle at top,#0f2027,#203a43,#2c5364);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:Arial;
 color:white;
 text-align:center;
-overflow-x:hidden;
+overflow:hidden;
+
+background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffb199);
+background-size:400% 400%;
+animation:bgmove 10s infinite alternate;
 }
 
-/* sao */
-
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background-image:radial-gradient(white 1px,transparent 1px);
-background-size:35px 35px;
-opacity:0.25;
-z-index:-1;
+@keyframes bgmove{
+0%{background-position:left}
+100%{background-position:right}
 }
 
-/* tiêu đề */
-
-.title{
-margin-top:40px;
-font-size:36px;
-color:#ff7eb9;
-text-shadow:0 0 20px #ff2f92;
-animation:glow 2s infinite alternate;
+h1{
+font-size:28px;
+margin:10px;
 }
 
-@keyframes glow{
-from{ text-shadow:0 0 10px #ff2f92;}
-to{ text-shadow:0 0 30px #ff2f92;}
+#text{
+font-size:20px;
+max-width:90%;
+line-height:1.6;
 }
 
-.subtitle{
-margin-top:10px;
-color:#ffc9e3;
+button{
+padding:15px 30px;
+border:none;
+border-radius:30px;
+font-size:18px;
+background:white;
+color:#ff4b7d;
+margin-top:20px;
+cursor:pointer;
 }
-
-/* ảnh */
-
-.photo{
-margin-top:30px;
-}
-
-.photo img{
-width:200px;
-height:260px;
-object-fit:cover;
-border-radius:20px;
-box-shadow:0 0 25px rgba(255,0,120,0.7);
-}
-
-/* tim */
 
 .heart{
-font-size:55px;
-margin:20px;
-cursor:pointer;
-animation:beat 1.2s infinite;
-}
-
-@keyframes beat{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
-}
-
-/* card */
-
-.card{
-width:90%;
-max-width:500px;
-margin:20px auto;
-padding:25px;
-border-radius:20px;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(8px);
-box-shadow:0 0 25px rgba(255,0,130,0.4);
-}
-
-/* text */
-
-.text{
-font-size:18px;
-line-height:1.8;
-margin-top:10px;
-word-wrap:break-word;
-}
-
-/* tim bay */
-
-.fly{
-position:fixed;
-bottom:-20px;
+position:absolute;
+color:red;
 font-size:20px;
-color:#ff6fa5;
-animation:fly 6s linear infinite;
+animation:fly 2s linear forwards;
 }
 
 @keyframes fly{
@@ -121,9 +65,25 @@ transform:translateY(0) scale(1);
 opacity:1;
 }
 100%{
-transform:translateY(-100vh) scale(2);
+transform:translateY(-200px) scale(2);
 opacity:0;
 }
+}
+
+#surprise{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+opacity:0;
+color:#ff4b7d;
+transition:2s;
 }
 
 </style>
@@ -131,101 +91,118 @@ opacity:0;
 
 <body>
 
-<div class="title">💗 Chúc mừng 8/3 💗</div>
-<div class="subtitle">Một điều nhỏ dành riêng cho Na ✨</div>
+<h1>💖 Gửi Na 💖</h1>
 
-<div class="photo">
-<img src="na.jpg">
-</div>
+<div id="text"></div>
 
-<div class="heart" onclick="love()">❤️</div>
+<button onclick="start()">Bấm vào đây nha Na 💌</button>
 
-<div class="card">
-<div id="text" class="text"></div>
-</div>
+<div id="surprise">Anh thích Na rất nhiều 💖</div>
+
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f0e8a6e17.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
-/* lời chúc */
-
-const message = `💞 Na là điều rất đặc biệt với Hiếu 💞
-
-Chúc Na luôn xinh đẹp, vui vẻ và hạnh phúc mỗi ngày 🌸
-
-Cảm ơn vì đã xuất hiện trong cuộc sống của Hiếu.
-
-Hy vọng mỗi ngày của Na đều tràn ngập niềm vui,
-nụ cười và những điều ngọt ngào nhất.
-
-Chúc Na có một ngày 8/3 thật đặc biệt
-và thật nhiều yêu thương 💛
-
-Happy Women's Day Na ❤️`;
-
-
-/* chữ hiện dần */
+const messages=[
+"Chúc Na một ngày 8/3 thật nhiều niềm vui 🌸",
+"Luôn luôn xinh đẹp và hạnh phúc",
+"Cảm ơn Na vì đã xuất hiện",
+"Làm cho thế giới của anh trở nên đặc biệt hơn",
+"Và thật ra...",
+"Anh có điều này muốn nói..."
+]
 
 let i=0
+let text=document.getElementById("text")
 
-function typing(){
+function start(){
 
-if(i < message.length){
+document.querySelector("button").style.display="none"
 
-document.getElementById("text").innerHTML += message.charAt(i)
+document.getElementById("music").play()
 
+showText()
+
+}
+
+function showText(){
+
+if(i<messages.length){
+
+let line=messages[i]
+let j=0
+
+let interval=setInterval(()=>{
+
+text.innerHTML=line.substring(0,j)
+
+j++
+
+if(j>line.length){
+clearInterval(interval)
 i++
+setTimeout(showText,1500)
+}
 
-setTimeout(typing,40)
+},80)
+
+}
+
+else{
+
+fireworks()
+
+setTimeout(()=>{
+document.getElementById("surprise").style.opacity=1
+},3000)
 
 }
 
 }
 
-typing()
+document.addEventListener("click",(e)=>{
 
+let heart=document.createElement("div")
 
-/* tim bay */
+heart.innerHTML="❤️"
 
-function createHeart(){
+heart.className="heart"
 
-const heart=document.createElement("div")
-
-heart.classList.add("fly")
-
-heart.innerHTML="💖"
-
-heart.style.left=Math.random()*100+"vw"
-
-heart.style.fontSize=(15+Math.random()*25)+"px"
-
-heart.style.animationDuration=(4+Math.random()*3)+"s"
+heart.style.left=e.clientX+"px"
+heart.style.top=e.clientY+"px"
 
 document.body.appendChild(heart)
 
 setTimeout(()=>{
-
 heart.remove()
+},2000)
 
-},6000)
+})
 
-}
+function fireworks(){
 
-setInterval(createHeart,400)
+for(let i=0;i<30;i++){
 
+setTimeout(()=>{
 
-/* bấm tim */
+let heart=document.createElement("div")
 
-function love(){
+heart.innerHTML="💖"
 
-if(navigator.vibrate){
+heart.className="heart"
 
-navigator.vibrate([200,100,200])
+heart.style.left=Math.random()*window.innerWidth+"px"
+heart.style.top=Math.random()*window.innerHeight+"px"
 
-}
+document.body.appendChild(heart)
 
-for(let i=0;i<10;i++){
+setTimeout(()=>{
+heart.remove()
+},2000)
 
-createHeart()
+},i*150)
 
 }
 
